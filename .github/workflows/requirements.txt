@@ -1,0 +1,4 @@
+# Modules without version requirements
+pandas
+pyarrow
+petastorm
