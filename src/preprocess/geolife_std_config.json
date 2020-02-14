@@ -1,0 +1,12 @@
+{
+    "dataset_path": "",
+    "field_mapping": {
+        "1": "latitude",
+        "2": "longitude",
+        "3": "",
+        "4": "altitude",
+        "5": "excel_days",
+        "6": "date",
+        "7": "time_gmt"
+    }
+}
