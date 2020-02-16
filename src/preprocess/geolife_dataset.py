@@ -93,7 +93,7 @@ class TrajectoryPLTFile:
             config = json.load(f)
 
         # Read as CSV
-        self.trajectory_df = pd.read_csv(path, header=config['GeoLife_Specifics']['num_of_lines_to_skip'])
+        self.trajectory_df = pd.read_csv(self.file_path, header=config['GeoLife_Specifics']['num_of_lines_to_skip'])
 
     def unbind_data(self):
         self.trajectory_df = pd.DataFrame()
