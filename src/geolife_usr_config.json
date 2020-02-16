@@ -1,0 +1,15 @@
+{
+    "GeoLife_Specifics": {
+        "dataset_path": "/Users/yinglai/Documents/Datasets/Geolife_Trajectories_1.3/Data",
+        "num_of_lines_to_skip": "6",
+        "field_mapping": {
+            "1": "latitude",
+            "2": "longitude",
+            "3": "",
+            "4": "altitude",
+            "5": "excel_days",
+            "6": "date_gmt",
+            "7": "time_gmt"
+        }
+    }
+}
