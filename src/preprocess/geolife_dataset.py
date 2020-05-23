@@ -95,7 +95,7 @@ class TrajectoryPLTFile:
         Loads the data into the Trajectory object as a Pandas Dataframe.
         """
         # Read as CSV and store in the Trajectory object.
-        self.trajectory_df = pd.read_csv(self.file_path, header=config['GeoLife_Specifics']['num_of_lines_to_skip'])
+        self.trajectory_df = pd.read_csv(self.file_path, header=config['GeoLife_Specifics']['num_of_lines_to_skip'], names=config['GeoLife_Specifics']['field_mapping'])
 
     def unbind_data(self):
         """ 
