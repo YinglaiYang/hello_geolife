@@ -8,6 +8,10 @@ from time import perf_counter
 # The following imports will need to be capsuled into the target formats.
 import pandas as pd
 
+# The following imports are only used for exploratory purposes
+import random
+import matplotlib.pyplot as plt
+
 if __name__ == '__main__':
     # Load JSON config
     config = {}
@@ -27,9 +31,31 @@ if __name__ == '__main__':
     print(dataset.participants[0].trajectories[0].file_path)
     print( os.path.relpath(dataset.participants[0].trajectories[0].file_path, start=config['GeoLife_Specifics']['dataset_root_path']) )
 
+    # Random numbers to determine which trajectory from which participant to visualize.
+    p_nr = random.randrange(0, len(dataset.participants))
+    participant = dataset.participants[p_nr]
+
+    trj_nr = random.randrange(0, len(participant.trajectories))
+    trj = participant.trajectories[trj_nr]
+
+    print('Data from participant {} trajectory {}'.format(participant.id_key, trj.id_key))
+
+    # Load the data of the trajectory
+    trj.load_data(config)
+
+    print(trj.trajectory_df)
+
+    # Visualize with Pandas Scatter Plot
+    ax = trj.trajectory_df.plot.scatter(x='longitude', y='latitude', c='excel_days', colormap='winter', marker='2')
+    plt.show()
+            
+
+'''
     # Step through all data to transform to parquet basic.
     # ----------------------------------------------------
     timer_start = perf_counter()
+    counter = 0
+    num_participants = len(dataset.participants)
 
     for participant in dataset.participants:
         for trj in participant.trajectories:
@@ -51,9 +77,12 @@ if __name__ == '__main__':
             trj_df = trj.get_data(config)
             trj_df.to_parquet( target_file_path )  
 
-        print('=> Finished conversion to Parquet Basic for participant {}'.format(participant.id_key))
+        # Finished all data for one participant, so tell it
+        counter = counter + 1
+        print('==> Finished transformations for {} participants out of {}'.format(counter, num_participants))
 
     timer_end = perf_counter()
 
     print('===============')
     print('The complete conversion took {}s.'.format(timer_end - timer_start))
+'''
