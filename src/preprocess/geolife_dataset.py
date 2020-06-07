@@ -3,6 +3,11 @@ import pandas as pd
 import json
 
 class GeoLifeDataSet:
+    """
+    This is the main class to represent the GeoLife dataset as it comes downloaded.
+    It is the basis for any transformation step like "Parquet_Basic".
+    """
+
     folder_path = ''
     participants = [] #Contains references to all participants
 
@@ -85,15 +90,25 @@ class TrajectoryPLTFile:
             print('--> Error in referencing trajectory file: {}'.format(pot_id_key))
         pass
 
-    def load_data(self):
-        config = dict()
-
-        # Read the config to check how many lines to skip in file
-        with open('geolife_usr_config.json', 'r') as f:
-            config = json.load(f)
-
-        # Read as CSV
-        self.trajectory_df = pd.read_csv(self.file_path, header=config['GeoLife_Specifics']['num_of_lines_to_skip'])
+    def load_data(self, config):
+        """
+        Loads the data into the Trajectory object as a Pandas Dataframe.
+        """
+        # Read as CSV and store in the Trajectory object.
+        self.trajectory_df = pd.read_csv(self.file_path, header=config['GeoLife_Specifics']['num_of_lines_to_skip'], names=config['GeoLife_Specifics']['field_mapping'])
 
     def unbind_data(self):
+        """ 
+        Unbinds the Dataframe stored in the Trajectory object. This should be used after finishing using the data to save memory.
+        """
         self.trajectory_df = pd.DataFrame()
+
+    def get_data(self, config):
+        """
+        Gets the data associated to the Trajectory object as a Pandas Dataframe and returns it as such.
+        This method does not store the data in the Trajectory object itself.
+        """
+        # Read as CSV
+        trajectory_df = pd.read_csv(self.file_path, header=config['GeoLife_Specifics']['num_of_lines_to_skip'])
+        
+        return trajectory_df
